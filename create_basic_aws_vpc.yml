@@ -1,0 +1,53 @@
+---
+- name:
+  hosts: localhost
+  vars:
+    aws_region: eu-central-1
+  tasks:
+    - name: Task to create a VPC
+      ec2_vpc_net:
+        name: ansible_awx_vpc
+        cidr_block: 10.1.0.0/16
+        region: "{{ aws_region }}"
+        tenancy: default
+      register: ansible_awx_vpc
+
+    - name: Create an IGW and associate it to the VPC
+      ec2_vpc_igw:
+        vpc_id: "{{ ansible_awx_vpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        state: present
+      register: ansible_awx_igw
+
+    - name: Create a subnet in the VPC
+      ec2_vpc_subnet:
+        state: present
+        vpc_id: "{{ ansible_awx_vpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        cidr: 10.1.0.0/24
+      register: ansible_awx_subnet
+
+    - name: Set up a public subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{ ansible_awx_vpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        subnets:
+          - "{{ ansible_awx_subnet.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ ansible_awx_igw.gateway_id }}"
+
+    - name: Create a Security Group
+      ec2_group:
+        name: ansible_awx_sg
+        description: AWS SG for Ansible AWX
+        vpc_id: "{{ ansible_awx_vpc.vpc.id }}"
+        region: "{{ aws_region }}"
+        rules:
+          - proto: tcp
+            ports:
+              - 22
+              - 443
+              - 666
+            cidr_ip: 0.0.0.0/0
+            rule_desc: allow all connections on port 22
