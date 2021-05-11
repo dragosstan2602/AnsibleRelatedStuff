@@ -1,0 +1,20 @@
+---
+- name: Lauch a CF stack from an S3 template
+  hosts: localhost
+  vars:
+    aws_region: eu-central-1
+  tasks:
+    - name: launch ansible cloudformation example
+      cloudformation:
+        stack_name: "ansible-cloudformation"
+        state: present
+        region: "{{ aws_region }}"
+        template_url: https://ansible-awx-test-bucket.s3.eu-central-1.amazonaws.com/main.yml
+      args:
+        template_parameters:
+          PublicSubnet1Cidr: 192.168.1.0/24
+          PublicSubnet2Cidr: 192.168.2.0/24
+          VPCCidr: 192.168.0.0/16
+          VPCName: Some-Other-VPC
+        tags:
+          Stack: ansible-cloudformation
