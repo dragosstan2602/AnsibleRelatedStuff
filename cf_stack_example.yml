@@ -7,7 +7,7 @@
     - name: launch ansible cloudformation example
       cloudformation:
         stack_name: "ansible-cloudformation"
-        state: present
+        state: absent
         region: "{{ aws_region }}"
         template_url: https://ansible-awx-test-bucket.s3.eu-central-1.amazonaws.com/main.yml
       args:
