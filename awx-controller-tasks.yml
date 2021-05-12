@@ -1,7 +1,7 @@
 ---
 -  name: Run tasks on the AWX controller
    hosts: localhost
-   become: yes
+   become: true
    tasks:
      - name: install various tools
        yum: 
