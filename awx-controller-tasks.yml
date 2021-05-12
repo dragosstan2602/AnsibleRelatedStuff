@@ -1,0 +1,10 @@
+---
+name: Run tasks on the AWX controller
+hosts: localhost
+tasks:
+  - name: install various tools
+    yum: 
+      name: "{{ packages }}"
+  vars:
+    packages:
+      - python3-pip
