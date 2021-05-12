@@ -6,6 +6,6 @@ tasks:
   - name: install various tools
     yum: 
       name: "{{ packages }}"
-  vars:
-    packages:
-      - python3-pip
+    vars:
+      packages:
+        - python3-pip
