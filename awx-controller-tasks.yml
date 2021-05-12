@@ -1,11 +1,13 @@
 ---
-name: Run tasks on the AWX controller
-hosts: localhost
-become: yes
-tasks:
-  - name: install various tools
-    yum: 
-      name: "{{ packages }}"
-    vars:
-      packages:
-        - python3-pip
+-  name: Run tasks on the AWX controller
+   hosts: localhost
+   become: yes
+   tasks:
+     - name: install various tools
+       yum: 
+         name: "{{ packages }}"
+       vars:
+         packages:
+           - python3-pip
+           - vim
+           - git
