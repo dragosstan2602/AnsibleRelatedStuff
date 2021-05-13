@@ -22,4 +22,4 @@
 
     - name: Print stack info
       debug:
-        msg: "{{ output }}"
+        msg: "{{ output.outputs }}"
