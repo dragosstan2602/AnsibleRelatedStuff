@@ -1,6 +1,7 @@
 ---
 - name: Lauch a CF stack from an S3 template
   hosts: localhost
+  gather_facts: false
   vars:
     aws_region: eu-central-1
   tasks:
