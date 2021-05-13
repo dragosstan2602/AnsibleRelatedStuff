@@ -18,3 +18,12 @@
           VPCName: Some-Other-VPC
         tags:
           Stack: ansible-cloudformation
+
+    - name: Gather info about stack created before
+      cloudformation_info:
+        stack_name: "ansible-cloudformation"
+      register: output
+
+    - name: Print stack info
+      debug:
+        msg: "{{ output['cloudformation']['my-cloudformation-stack'] }}"
