@@ -23,4 +23,4 @@
 
     - name: Print stack info
       debug:
-        msg: "{{ output.msg }}"
+        msg: "{{ output }}"
