@@ -21,6 +21,6 @@
           Stack: ansible-cloudformation
       register: output
 
-   - name: Print stack info
-     debug:
-       msg: "{{ output['stack_outputs']['VPC'] }}"
+    - name: Print stack info
+      debug:
+        msg: "{{ output['stack_outputs']['VPC'] }}"
