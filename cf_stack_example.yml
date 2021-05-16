@@ -8,7 +8,7 @@
     - name: launch ansible cloudformation example
       cloudformation:
         stack_name: "ansible-cloudformation"
-        state: absent
+        state: present
         region: "{{ aws_region }}"
         template_url: https://ansible-awx-test-bucket.s3.eu-central-1.amazonaws.com/main.yml
       args:
@@ -21,6 +21,6 @@
           Stack: ansible-cloudformation
       register: output
 
-#    - name: Print stack info
-#      debug:
-#        msg: "{{ output['stack_outputs']['VPC'] }}"
+   - name: Print stack info
+     debug:
+       msg: "{{ output['stack_outputs']['VPC'] }}"
